@@ -52,6 +52,8 @@ const stores = [
   },
 ];
 
+const orderOnlineHref = stores[0]?.action.href ?? "https://www.quickvee.com/merchant/FAW222628NJ?orderMethod=pickup";
+
 function Index() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-background">
