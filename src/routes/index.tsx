@@ -78,7 +78,7 @@ function Index() {
             <span className="text-gold"> SMOKE SHOP</span>
           </span>
           <a
-            href={stores[0].action.href}
+            href={orderOnlineHref}
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-full border border-gold/40 bg-card px-5 py-2 text-sm font-semibold uppercase tracking-wider text-gold-soft backdrop-blur-md transition-colors hover:bg-gold/15"
