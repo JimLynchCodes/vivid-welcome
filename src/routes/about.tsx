@@ -39,7 +39,7 @@ function AboutPage() {
           </span>
           <div className="pt-1">
             <h3 className="font-semibold text-foreground">Legit</h3>
-            <p className="mt-1 text-sm text-muted-foreground">100% authentic products — no knockoffs</p>
+            <p className="mt-1 text-sm text-muted-foreground">100% authentic products.</p>
           </div>
         </li>
         <li className="flex items-start gap-4 rounded-2xl border border-border bg-card p-4 shadow-md backdrop-blur-md transition-all hover:border-gold/40">
@@ -57,7 +57,7 @@ function AboutPage() {
           </span>
           <div className="pt-1">
             <h3 className="font-semibold text-foreground">Curated</h3>
-            <p className="mt-1 text-sm text-muted-foreground">Focused selection = less overwhelm, more quality</p>
+            <p className="mt-1 text-sm text-muted-foreground">Focused selection: less overwhelm, more quality</p>
           </div>
         </li>
       </ol>
