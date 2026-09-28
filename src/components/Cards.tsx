@@ -16,7 +16,7 @@ interface CardsProps {
 
 export default function Cards({ stores }: CardsProps) {
   return (
-    <div>
+    <div className="animate-route-slide-up">
       <div className="mt-12 grid w-full max-w-4xl gap-5 sm:grid-cols-2">
         {stores.map((store, i) => (
           <a
@@ -31,14 +31,14 @@ export default function Cards({ stores }: CardsProps) {
               <span className="rounded-full border border-gold/30 bg-gold/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-gold-soft">
                 {store.tagline}
               </span>
-              {i === 0 ? (
+              
                 <ShoppingBag className="animate-ember-pulse h-5 w-5 text-gold" />
-              ) : (
-                <MapPin className="h-5 w-5 text-gold" />
-              )}
+
+                {/* <MapPin className="h-5 w-5 text-gold" /> */}
+
             </div>
             <h2 className="font-display mt-5 text-4xl text-foreground">{store.name}</h2>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground whitespace-pre-line">
               {store.description}
             </p>
             <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-gold transition-all group-hover:gap-3">

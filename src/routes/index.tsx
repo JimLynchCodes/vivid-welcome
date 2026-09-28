@@ -29,24 +29,37 @@ export const Route = createFileRoute("/")({
 
 const stores: Store[] = [
   {
-    name: "Pineapple Xpress",
-    tagline: "Online Exclusive",
+    name: "Pineapple Xpress Vineland",
+    tagline: "Vineland",
     description:
-      "Premium nicotine vapes and disposables from the most trusted brands — shipped straight to your door.",
+      `1381 W Landis Ave #1381B, Vineland, NJ 08360`,
     action: {
       label: "Order Online",
-      href: "https://www.quickvee.com/merchant/FAW222628NJ?orderMethod=pickup",
+      href: "https://quickvee.com/merchant/FAW29198NJ?orderMethod=delivery",
       external: true,
     },
   },
   {
-    name: "NIC Vineland",
-    tagline: "Visit the Shop",
+    name: "Pineapple Xpress Burlington",
+    tagline: "Burlington",
     description:
-      "1381 West Landis Ave, Vineland, NJ 08360 — stop in and browse the full lineup in person.",
+      `1805 Mt Holly Rd Ste 200, Burlington, NJ 08016`,
     action: {
-      label: "Get Directions",
-      href: "https://www.google.com/maps/dir/?api=1&destination=1381+West+Landis+Ave,+Vineland,+NJ+08360",
+      label: "Order Online",
+      href: "https://quickvee.com/merchant/FAW125934NJ?orderMethod=delivery",
+      external: true,
+    },
+  },
+  {
+    name: "Third Option",
+    tagline: "Queens",
+    description:
+      `Example of a third option with some extra text. 
+      
+      34-15 31st St, Long Island City, NY 11106`,
+    action: {
+      label: "Say What's up",
+      href: "https://www.olywarehousenyc.com/",
       external: true,
     },
   },

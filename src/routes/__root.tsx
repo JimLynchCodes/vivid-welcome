@@ -152,9 +152,8 @@ function RootComponent() {
 
               {/* Mobile Side Drawer Menu & Overlay */}
               <div
-                className={`fixed inset-0 z-50 transition-opacity duration-300 sm:hidden ${
-                  isMenuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
-                }`}
+                className={`fixed inset-0 z-50 transition-opacity duration-300 sm:hidden ${isMenuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+                  }`}
               >
                 {/* Dark Backdrop */}
                 <div
@@ -164,9 +163,8 @@ function RootComponent() {
 
                 {/* Side Menu Drawer */}
                 <aside
-                  className={`absolute top-0 right-0 bottom-0 w-72 border-l border-gold/30 bg-card/95 p-6 shadow-2xl backdrop-blur-xl transition-transform duration-300 ${
-                    isMenuOpen ? "translate-x-0" : "translate-x-full"
-                  }`}
+                  className={`absolute top-0 right-0 bottom-0 w-72 border-l border-gold/30 bg-card/95 p-6 shadow-2xl backdrop-blur-xl transition-transform duration-300 ${isMenuOpen ? "translate-x-0" : "translate-x-full"
+                    }`}
                 >
                   {/* Header inside drawer */}
                   <div className="flex items-center justify-between border-b border-gold/20 pb-6">
@@ -224,7 +222,7 @@ function RootComponent() {
               The best delivery service in New Jersey.
             </p>
             <h1
-              className="font-display animate-drift-up text-glow-gold mt-4 flex flex-col text-6xl leading-none text-foreground sm:flex-row sm:gap-x-6 sm:text-8xl lg:text-9xl"
+              className="font-display animate-drift-up text-glow-gold mt-4 flex flex-col text-[12vw] leading-none text-foreground sm:flex-row sm:gap-x-4 sm:text-[9vw] lg:text-9xl"
               style={{ animationDelay: "0.25s" }}
             >
               <span>Challenge</span>
@@ -243,7 +241,7 @@ function RootComponent() {
 
           <footer className="px-6 pb-8 text-center sm:px-10">
             <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground/70">
-              © 2026 Pineapple Xpress · Vineland, NJ
+              © 2026 Pineapple Xpress
             </p>
           </footer>
         </div>

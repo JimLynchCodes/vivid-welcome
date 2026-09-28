@@ -156,3 +156,35 @@
     0 0 24px oklch(0.82 0.145 82 / 35%),
     0 2px 30px oklch(0 0 0 / 60%);
 }
+
+/* Slide In from Right & Fade In */
+@keyframes route-enter {
+  0% {
+    opacity: 0;
+    transform: translateX(1.5rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@utility animate-route-enter {
+  animation: route-enter 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Slide Up & Fade In (Vertical alternative) */
+@keyframes route-slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-route-slide-up {
+  animation: route-slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
