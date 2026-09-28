@@ -28,7 +28,7 @@ export default function Cards({ stores }: CardsProps) {
             style={{ animationDelay: `${0.55 + i * 0.15}s` }}
           >
             <div className="flex items-center justify-between">
-              <span className="rounded-full border border-gold/30 bg-gold/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-gold-soft">
+              <span className="rounded-full border border-gold/30 bg-gold/10 px-3 py-1 text-[13px] font-semibold uppercase tracking-widest text-gold-soft">
                 {store.tagline}
               </span>
               
@@ -38,7 +38,7 @@ export default function Cards({ stores }: CardsProps) {
 
             </div>
             <h2 className="font-display mt-5 text-4xl text-foreground">{store.name}</h2>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground whitespace-pre-line">
+            <p className="mt-3 text-m leading-relaxed text-muted-foreground whitespace-pre-line">
               {store.description}
             </p>
             <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-gold transition-all group-hover:gap-3">
