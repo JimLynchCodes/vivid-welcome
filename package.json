@@ -13,7 +13,11 @@
     "dev:web": "vite dev",
     "dev:api": "tsx watch server/index.ts",
     "server": "tsx server/index.ts",
-    "mock-llm": "tsx scripts/mock-llm.ts"
+    "mock-llm": "tsx scripts/mock-llm.ts",
+    "mock-quickvee": "tsx scripts/mock-quickvee.ts",
+    "bench-rag": "node scripts/bench-rag.mjs",
+    "test:chat": "node scripts/e2e-chat.mjs",
+    "test:quickvee": "node scripts/test-quickvee.mjs"
   },
   "overrides": {
     "rolldown": "1.2.1"

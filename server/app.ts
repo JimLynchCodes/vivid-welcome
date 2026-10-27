@@ -1,14 +1,10 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import { formatContext, retrieve } from "./lib/knowledge.js";
-import {
-  getLlmConfig,
-  pipeOpenAiSseToTokens,
-  streamChatCompletion,
-  type ChatMessage,
-} from "./lib/llm.js";
+import { buildIndex, formatContext, getIndexStats, retrieve } from "./lib/knowledge.js";
+import { getLlmConfig, runAgentStream, type ChatMessage } from "./lib/llm.js";
 import { rateLimit } from "./lib/rate-limit.js";
 import { SYSTEM_PROMPT } from "./lib/system-prompt.js";
+import { getCommerceProvider } from "./providers/index.js";
 
 const MAX_MESSAGE_CHARS = 2000;
 const MAX_HISTORY = 12;
@@ -28,7 +24,17 @@ app.use(
   }),
 );
 
-app.get("/api/health", (c) => c.json({ ok: true, service: "pineapple-xpress-chat" }));
+app.get("/api/health", async (c) => {
+  await buildIndex();
+  const stats = getIndexStats();
+  const provider = getCommerceProvider();
+  return c.json({
+    ok: true,
+    service: "pineapple-xpress-chat",
+    commerce_provider: provider.id,
+    rag: stats,
+  });
+});
 
 app.post("/api/chat", async (c) => {
   const ip =
@@ -55,18 +61,18 @@ app.post("/api/chat", async (c) => {
         (m.role === "user" || m.role === "assistant") && typeof m.content === "string",
     )
     .map((m) => ({ role: m.role, content: m.content.trim() }))
-    .filter((m) => m.content.length > 0)
+    .filter((m) => (m.content ?? "").length > 0)
     .slice(-MAX_HISTORY);
 
   const lastUser = [...history].reverse().find((m) => m.role === "user");
-  if (!lastUser) {
+  if (!lastUser || !lastUser.content) {
     return c.json({ error: "A user message is required" }, 400);
   }
   if (lastUser.content.length > MAX_MESSAGE_CHARS) {
     return c.json({ error: `Message too long (max ${MAX_MESSAGE_CHARS} characters)` }, 400);
   }
 
-  const chunks = await retrieve(lastUser.content, 4);
+  const chunks = await retrieve(lastUser.content, 6);
   const context = formatContext(chunks);
 
   const messages: ChatMessage[] = [
@@ -79,12 +85,10 @@ app.post("/api/chat", async (c) => {
 
   try {
     const config = getLlmConfig();
-    const upstream = await streamChatCompletion(messages, config, c.req.raw.signal);
-    if (!upstream.body) {
-      return c.json({ error: "LLM returned an empty body" }, 502);
-    }
-
-    const stream = pipeOpenAiSseToTokens(upstream.body);
+    const stream = await runAgentStream(messages, config, {
+      ip,
+      signal: c.req.raw.signal,
+    });
     return new Response(stream, {
       status: 200,
       headers: {

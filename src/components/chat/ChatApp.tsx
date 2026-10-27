@@ -14,6 +14,7 @@ import { Sidebar } from "./Sidebar";
 async function readSseStream(
   res: Response,
   onToken: (token: string) => void,
+  onStatus: (status: string) => void,
   signal: AbortSignal,
 ): Promise<void> {
   if (!res.body) throw new Error("Empty response body");
@@ -37,8 +38,13 @@ async function readSseStream(
       const data = trimmed.slice(5).trim();
       if (data === "[DONE]") return;
       try {
-        const json = JSON.parse(data) as { token?: string; error?: string };
+        const json = JSON.parse(data) as {
+          token?: string;
+          status?: string;
+          error?: string;
+        };
         if (json.error) throw new Error(json.error);
+        if (json.status) onStatus(json.status);
         if (json.token) onToken(json.token);
       } catch (err) {
         if (err instanceof SyntaxError) continue;
@@ -55,6 +61,7 @@ export function ChatApp() {
   const [streaming, setStreaming] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [hydrated, setHydrated] = useState(false);
+  const [status, setStatus] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -133,6 +140,7 @@ export function ChatApp() {
       upsert(withUser);
       setDraft("");
       setStreaming(true);
+      setStatus(null);
 
       const controller = new AbortController();
       abortRef.current = controller;
@@ -166,6 +174,7 @@ export function ChatApp() {
           (token) => {
             assembled += token;
             const snapshot = assembled;
+            setStatus(null);
             setConversations((prev) =>
               prev.map((c) => {
                 if (c.id !== withUser.id) return c;
@@ -176,6 +185,7 @@ export function ChatApp() {
               }),
             );
           },
+          (st) => setStatus(st),
           controller.signal,
         );
 
@@ -210,6 +220,7 @@ export function ChatApp() {
         );
       } finally {
         setStreaming(false);
+        setStatus(null);
         abortRef.current = null;
       }
     },
@@ -250,6 +261,7 @@ export function ChatApp() {
           <MessageList
             messages={active?.messages ?? []}
             streaming={streaming}
+            status={status}
             onSuggestion={(text) => void send(text)}
           />
           <div ref={bottomRef} />

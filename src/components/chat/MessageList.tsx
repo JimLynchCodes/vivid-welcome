@@ -5,14 +5,15 @@ import { Markdown } from "./Markdown";
 
 const SUGGESTIONS = [
   "Where is the Vineland store?",
-  "How do I order online for Burlington?",
+  "Is Elf Bar in stock at Vineland?",
+  "Status of order PX-1001 for test@example.com",
   "What makes Pineapple Xpress different?",
-  "Do you have a Queens location?",
 ];
 
 type Props = {
   messages: ChatMessage[];
   streaming: boolean;
+  status?: string | null;
   onSuggestion: (text: string) => void;
 };
 
@@ -38,7 +39,7 @@ function CopyButton({ text }: { text: string }) {
   );
 }
 
-export function MessageList({ messages, streaming, onSuggestion }: Props) {
+export function MessageList({ messages, streaming, status, onSuggestion }: Props) {
   if (messages.length === 0) {
     return (
       <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center px-4 py-10 text-center">
@@ -108,6 +109,12 @@ export function MessageList({ messages, streaming, onSuggestion }: Props) {
           </div>
         );
       })}
+      {streaming && status && (
+        <div className="flex items-center gap-2 px-1 text-sm text-gold-soft">
+          <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-gold" />
+          {status}
+        </div>
+      )}
     </div>
   );
 }
