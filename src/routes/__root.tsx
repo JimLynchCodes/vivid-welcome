@@ -1,5 +1,11 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Link, Outlet, createRootRouteWithContext, useRouter } from "@tanstack/react-router";
+import {
+  Link,
+  Outlet,
+  createRootRouteWithContext,
+  useRouter,
+  useRouterState,
+} from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
 import heroPoster from "@/assets/hero-poster.jpg";
@@ -8,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 const navLinks = [
   { label: "Home", to: "/" },
   { label: "About Us", to: "/about" },
+  { label: "Chat", to: "/chat" },
 ] as const;
 
 // Rendered inside the root layout's <Outlet />, so no full-screen wrapper.
@@ -92,6 +99,18 @@ export const Route = createRootRouteWithContext<{
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isChat = pathname === "/chat" || pathname.startsWith("/chat/");
+
+  // Chat gets a full-bleed ChatGPT-style shell; marketing pages keep the hero layout.
+  if (isChat) {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <Outlet />
+      </QueryClientProvider>
+    );
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <div className="relative min-h-screen overflow-hidden bg-background">
@@ -152,8 +171,9 @@ function RootComponent() {
 
               {/* Mobile Side Drawer Menu & Overlay */}
               <div
-                className={`fixed inset-0 z-50 transition-opacity duration-300 sm:hidden ${isMenuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
-                  }`}
+                className={`fixed inset-0 z-50 transition-opacity duration-300 sm:hidden ${
+                  isMenuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+                }`}
               >
                 {/* Dark Backdrop */}
                 <div
@@ -163,8 +183,9 @@ function RootComponent() {
 
                 {/* Side Menu Drawer */}
                 <aside
-                  className={`absolute top-0 right-0 bottom-0 w-72 border-l border-gold/30 bg-card/95 p-6 shadow-2xl backdrop-blur-xl transition-transform duration-300 ${isMenuOpen ? "translate-x-0" : "translate-x-full"
-                    }`}
+                  className={`absolute top-0 right-0 bottom-0 w-72 border-l border-gold/30 bg-card/95 p-6 shadow-2xl backdrop-blur-xl transition-transform duration-300 ${
+                    isMenuOpen ? "translate-x-0" : "translate-x-full"
+                  }`}
                 >
                   {/* Header inside drawer */}
                   <div className="flex items-center justify-between border-b border-gold/20 pb-6">

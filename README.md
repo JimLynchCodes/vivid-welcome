@@ -24,3 +24,8 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+## Store Assistant (chat)
+
+A ChatGPT-style store Q&A lives at `/#/chat`. See [CHAT.md](./CHAT.md) for the API, env vars, knowledge base, and deploy notes.
+
